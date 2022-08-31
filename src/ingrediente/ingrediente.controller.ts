@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Put } from '@nestjs/common';
 import { IngredienteService } from './ingrediente.service';
 import { CreateIngredienteDto } from './dto/create-ingrediente.dto';
 import { UpdateIngredienteDto } from './dto/update-ingrediente.dto';
@@ -9,31 +9,43 @@ export class IngredienteController {
   constructor(private readonly ingredienteService: IngredienteService) {}
 
   @Post()
-  create(@Res() res, @Body() createIngredienteDto: CreateIngredienteDto)  {
-   const ingredienteCreado = this.ingredienteService.create(createIngredienteDto);
+  async create(@Res() res, @Body() createIngredienteDto: CreateIngredienteDto)  {
+   const ingredienteCreado = await this.ingredienteService.create(createIngredienteDto);
    res.json({
-    mesage: 'usuario creado',
+    mesage: 'Ingrediente creado',
     ingredienteCreado
    })
   }
 
   @Get()
-  findAll() {
-    return this.ingredienteService.findAll();
+  async findAll(@Res() res) {
+    const ingredientes = await this.ingredienteService.findAll();
+    res.json({
+      ingredientes
+    })
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ingredienteService.findOne(+id);
+  async findOne(@Res() res, @Param('id') id: string) {
+    const unIngrediente = await this.ingredienteService.findOne(id);
+    res.json({
+      unIngrediente
+    })
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateIngredienteDto: UpdateIngredienteDto) {
-    return this.ingredienteService.update(+id, updateIngredienteDto);
+  @Put(':id')
+  async update(@Res() res, @Param('id') id: string, @Body() updateIngredienteDto: UpdateIngredienteDto) {
+    const ingredienteActualizado = await this.ingredienteService.update(id, updateIngredienteDto);
+    res.json({
+      ingredienteActualizado
+    })
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.ingredienteService.remove(+id);
+  async remove(@Res() res, @Param('id') id: string) {
+    const ingredienteEliminado = await this.ingredienteService.remove(id);
+    res.json({
+      ingredienteEliminado
+    })
   }
 }
