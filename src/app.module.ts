@@ -5,10 +5,10 @@ import { AppService } from './app.service';
 import { UsuarioModule } from './usuario/usuario.module';
 import { RecetaModule } from './receta/receta.module';
 import { IngredienteModule } from './ingrediente/ingrediente.module';
-
+import { ConfigModule } from '@nestjs/config'
 @Module({
-  imports: [UsuarioModule, RecetaModule, IngredienteModule,
-     MongooseModule.forRoot('mongodb://localhost/recetas2')],
+  imports: [UsuarioModule, ConfigModule.forRoot(), RecetaModule, IngredienteModule,
+    MongooseModule.forRoot(process.env.MONGO_DB)],
   controllers: [AppController],
   providers: [AppService],
 })
