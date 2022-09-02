@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { RecetaService } from './receta.service';
 import { CreateRecetaDto } from './dto/create-receta.dto';
 import { UpdateRecetaDto } from './dto/update-receta.dto';
@@ -19,16 +19,16 @@ export class RecetaController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.recetaService.findOne(+id);
+    return this.recetaService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateRecetaDto: UpdateRecetaDto) {
-    return this.recetaService.update(+id, updateRecetaDto);
+    return this.recetaService.update(id, updateRecetaDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.recetaService.remove(+id);
+    return this.recetaService.remove(id);
   }
 }

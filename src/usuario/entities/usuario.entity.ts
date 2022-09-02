@@ -6,5 +6,5 @@ export const UsuarioSchema = new Schema({
     usuario: String,
     constraseña: String,
     rol: String,
-    estado: String
+    estado: Boolean
 })

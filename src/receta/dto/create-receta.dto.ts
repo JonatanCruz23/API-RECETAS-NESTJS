@@ -3,6 +3,6 @@ export class CreateRecetaDto {
     nombre:       string;
     descripcion?:  string;
     ingredientes: CreateIngredienteDto[];
-    estado?:       string;
-    IdUsuario:    number;
+    estado?:       Boolean;
+    IdUsuario:    string;
 }

@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateRecetaDto } from './dto/create-receta.dto';
 import { UpdateRecetaDto } from './dto/update-receta.dto';
+import { Receta } from './interfaces/receta.interface';
 
 @Injectable()
 export class RecetaService {
-  create(createRecetaDto: CreateRecetaDto) {
-    return 'This action adds a new receta';
+
+  constructor(@InjectModel('Receta') private recetaModel: Model<Receta>){}
+
+  async create(createRecetaDto: CreateRecetaDto) {
+    const createReceta = new this.recetaModel(createRecetaDto)
+    return await this.recetaModel.create(createReceta);
   }
 
-  findAll() {
-    return `This action returns all receta`;
+  async findAll(): Promise<Receta[]> {
+    const recetas = await this.recetaModel.find()
+    return recetas;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} receta`;
+  async findOne(id: string): Promise<Receta> {
+    const receta = await this.recetaModel.findById(id)
+    return receta;
+   }
+
+  async update(id: string, updateRecetaDto: UpdateRecetaDto): Promise<Receta> {
+    const usuario = await this.recetaModel.findByIdAndUpdate(id, updateRecetaDto, { new: true });
+    return usuario;
   }
 
-  update(id: number, updateRecetaDto: UpdateRecetaDto) {
-    return `This action updates a #${id} receta`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} receta`;
-  }
+  async remove(id: string): Promise<Receta> {
+    const usuario = await this.recetaModel.findByIdAndRemove(id)
+    return usuario;
+   }
 }

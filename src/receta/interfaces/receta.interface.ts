@@ -4,6 +4,6 @@ export interface Receta {
     nombre:       string;
     descripcion?:  string;
     ingredientes: Ingrediente[];
-    estado?:       string;
-    IdUsuario:    number;
+    estado?:       boolean;
+    IdUsuario:    string;
 }
