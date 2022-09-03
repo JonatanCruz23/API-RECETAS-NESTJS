@@ -23,7 +23,7 @@ export class RecetaService {
   async findOne(id: string): Promise<Receta> {
     const receta = await this.recetaModel.findById(id)
     return receta;
-   }
+  }
 
   async update(id: string, updateRecetaDto: UpdateRecetaDto): Promise<Receta> {
     const usuario = await this.recetaModel.findByIdAndUpdate(id, updateRecetaDto, { new: true });
@@ -33,5 +33,5 @@ export class RecetaService {
   async remove(id: string): Promise<Receta> {
     const usuario = await this.recetaModel.findByIdAndRemove(id)
     return usuario;
-   }
+  }
 }
